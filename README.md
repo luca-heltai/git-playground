@@ -1,2 +1,2 @@
 # git-playground
-Playground repository, to teach git to SISSA PhD students
+Playground repository, to teach git to SISSA PhD students.
