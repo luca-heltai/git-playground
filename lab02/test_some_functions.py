@@ -1,7 +1,7 @@
 from some_functions import *
 
 
-def test_function_failing():
+def function_failing():
     print("should not start")
     assert False
 
