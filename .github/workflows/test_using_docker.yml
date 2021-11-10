@@ -38,8 +38,7 @@ jobs:
   run-pytests:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
-    container: custom-pytorch
     steps:
       - name: Run pytest
         run: |
-          pytest
+          ./lab05/dr.sh pytest
