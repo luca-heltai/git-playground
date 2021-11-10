@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test python codes
+name: Run tests on custom Docker image
 
 # Controls when the workflow will run
 on:
@@ -15,20 +15,19 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  run-pytests:
-    # The type of runner that the job will run on
+  # build the docker image
+  build-docker-image:
     runs-on: ubuntu-latest
+    steps:          
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-      - name: Install pytest
+      - name: Build Docker image
         run: |
-          pip install pytest numpy
-
-      - name: Run pytest
+          docker build -t custom-pytorch ./lab05/.devcontainer
+      - name: Run pytest on the docker image
         run: |
-          pytest --ignore=lab05
+          ./lab05/dr.sh pytest
