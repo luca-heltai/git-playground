@@ -26,13 +26,8 @@ jobs:
         uses: docker/setup-buildx-action@v1
 
       - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./lab05/.devcontainer
-          # cache-from: type=registry,ref=dealii/dependencies:focal
-          # cache-to: type=inline
-          push: false
-          tags: custom-pytorch
+        run: |
+          docker build -t custom-pytorch ./lab05/.devcontainer
       - name: Run pytest on the docker image
         run: |
           ./lab05/dr.sh pytest
