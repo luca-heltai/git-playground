@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Test python codes
+name: Build the file test.tex in lab03 directory
 
 # Controls when the workflow will run
 on:
@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  run-pytests:
+  build-latex:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -25,10 +25,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Install pytest
+      - name: Build latex document
         run: |
-          pip install pytest numpy
-
-      - name: Run pytest
-        run: |
-          pytest --ignore=lab05
+          cd lab03
+          ./dr.sh "pdflatex test.tex"
+      - name: Upload pdf file
+        uses: actions/upload-artifact@v1
+        if: always()
+        continue-on-error: true
+        with:
+          name: test.pdf
+          path: lab03/test.pdf
